@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.idp.web.generator.dao.CgTableConfigDao">
+	
+	<parameterMap id="parameterMap" type="com.idp.web.generator.entity.CgTableConfig"></parameterMap>
+	<resultMap id="resultMap" type="com.idp.web.generator.entity.CgTableConfig">
+		<id property="id" column="id"/>
+		<result property="tableName" column="table_name"/>
+		<result property="tableComment" column="table_comment"/>
+		<result property="className" column="class_name"/>
+		<result property="description" column="description"/>
+		<result property="isCheckbox" column="is_checkbox"/>
+		<result property="isPage" column="is_page"/>
+		<result property="isTree" column="is_tree"/>
+		<result property="dataId" column="data_id"/>
+		<result property="projectPath" column="projectPath"/>
+		<result property="packageStyle" column="packageStyle"/>
+		<result property="sourceBasePackage" column="sourceBasePackage"/>
+		<result property="entityPackage" column="entityPackage"/>
+		<result property="webBasePackage" column="webBasePackage"/>
+		<result property="flags" column="flags"/>
+		<result property="pageModel" column="pageModel"/>
+		<result property="author" column="author"/>
+		<collection property="columns" column="table_id" ofType="com.idp.web.generator.entity.CgColumnConfig">
+			<id property="id" column="column_id"/>
+			<result property="tableId" column="table_id"/>
+			<result property="columnName" column="column_name"/>
+			<result property="columnType" column="column_type"/>
+			<result property="columnLength" column="column_length"/>
+			<result property="description" column="column_description"/>
+			<result property="fieldName" column="field_name"/>
+			<result property="fieldType" column="field_type"/>
+			<result property="nullable" column="nullable"/>
+			<result property="relationTable" column="relation_table"/>
+			<result property="relationColumnId" column="relation_column_id"/>
+			<result property="relationColumnText" column="relation_column_text"/>
+			<result property="sort" column="sort"/>
+			<result property="isKey" column="is_key"/>
+			<result property="showType" column="show_type"/>
+			<result property="isQuery" column="is_query"/>
+			<result property="queryModel" column="query_model"/>
+			<result property="queryType" column="query_type"/>
+			<result property="isShowList" column="is_show_list"/>
+			<result property="isShowForm" column="is_show_form"/>
+			<result property="formValidType" column="form_valid_type"/>
+			<result property="orderNum" column="order_num"/>
+		</collection>
+	</resultMap>
+
+	<select id="find" parameterMap="parameterMap" resultMap="resultMap">
+		select 
+			t.id,
+			t.table_name,
+			t.table_comment,
+			t.class_name,
+			t.description,
+			t.is_checkbox,
+			t.is_page,
+			t.is_tree
+		from cg_table_config t
+		<where>
+			<if test="tableName != null and tableName != ''">
+				t.table_name like '%${tableName}%'
+			</if>
+			<if test="description != null and description != ''">
+				t.description like '%${description}%'
+			</if>
+			<if test="dataId != null">
+				t.data_id = ${dataId}
+			</if>
+		</where>
+	</select>
+	
+	<select id="getById" parameterType="java.lang.Long" resultMap="resultMap">
+		select 
+			t.id,
+			t.table_name,
+			t.table_comment,
+			t.class_name,
+			t.description,
+			t.is_checkbox,
+			t.is_page,
+			t.is_tree,
+			t.data_id,
+			t.projectPath, 
+			t.packageStyle,
+			t.sourceBasePackage,
+			t.entityPackage,
+			t.webBasePackage,
+			t.flags,
+			t.pageModel,
+			t.author,
+			c.id as column_id,
+			c.column_name,
+			c.column_type,
+			c.column_length,
+			c.description as column_description,
+			c.field_name,
+			c.field_type,
+			c.nullable,
+			c.relation_table,
+			c.relation_column_id,
+			c.relation_column_text,
+			c.sort,
+			c.is_key,
+			c.show_type,
+			c.is_query,
+			c.query_model,
+			c.query_type,
+			c.is_show_list,
+			c.is_show_form,
+			c.form_valid_type,
+			c.order_num
+		from cg_table_config t
+		left join cg_column_config c on t.id = c.table_id
+		where t.id = #{value}
+	</select>
+	
+	
+	<select id="findName" parameterMap="parameterMap" resultMap="resultMap">
+		select 
+			t.id
+		from cg_table_config t where data_id = #{dataId} and table_name = #{tableName} 
+	</select>
+	
+	<select id="getByDid" parameterType="java.lang.Long" resultMap="resultMap">
+		select 
+			t.id,
+			t.table_name,
+			t.table_comment,
+			t.class_name,
+			t.description,
+			t.is_checkbox,
+			t.is_page,
+			t.is_tree,
+			t.data_id,
+			t.projectPath, 
+			t.packageStyle,
+			t.sourceBasePackage,
+			t.entityPackage,
+			t.webBasePackage,
+			t.flags,
+			t.pageModel,
+			t.author,
+			c.id as column_id,
+			c.column_name,
+			c.column_type,
+			c.column_length,
+			c.description as column_description,
+			c.field_name,
+			c.field_type,
+			c.nullable,
+			c.relation_table,
+			c.relation_column_id,
+			c.relation_column_text,
+			c.sort,
+			c.is_key,
+			c.show_type,
+			c.is_query,
+			c.query_model,
+			c.query_type,
+			c.is_show_list,
+			c.is_show_form,
+			c.form_valid_type,
+			c.order_num
+		from cg_table_config t
+		left join cg_column_config c on t.id = c.table_id
+		where t.data_id = #{value} limit 1
+	</select>
+
+	<insert id="add" useGeneratedKeys="true" keyProperty="id" parameterMap="parameterMap">
+		insert into cg_table_config
+			(data_id,table_name,table_comment,class_name,description,is_checkbox,is_page,is_tree,create_user,create_date)
+		values
+			(#{dataId},#{tableName},#{tableComment},#{className},#{description},#{isCheckbox},#{isPage},#{isTree},
+			#{createUser},#{createDate})
+	</insert>
+	
+	<update id="update" parameterMap="parameterMap">
+		update cg_table_config
+		<set>
+			class_name = #{className},
+			description = #{description},
+			update_user = #{updateUser},
+			update_date = #{updateDate},
+			data_id = #{dataId},
+			projectPath = #{projectPath},
+			packageStyle = #{packageStyle},
+			sourceBasePackage = #{sourceBasePackage},
+			entityPackage = #{entityPackage},
+			webBasePackage = #{webBasePackage},
+			flags = #{flags},
+			pageModel = #{pageModel},
+			author = #{author}
+		</set>
+		where id = #{id} 
+	</update>
+	
+	<update id="updateNotNull" parameterMap="parameterMap" >
+	    update cg_table_config
+	    <set >
+		      <if test="dataId != null" >
+		        data_id = #{dataId,jdbcType=BIGINT},
+		      </if>
+		      <if test="tableName != null" >
+		        table_name = #{tableName,jdbcType=VARCHAR},
+		      </if>
+		      <if test="tableComment != null" >
+		        table_comment = #{tableComment,jdbcType=VARCHAR},
+		      </if>
+		      <if test="className != null" >
+		        class_name = #{className,jdbcType=VARCHAR},
+		      </if>
+		      <if test="description != null" >
+		        description = #{description,jdbcType=VARCHAR},
+		      </if>
+		      <if test="isCheckbox != null" >
+		        is_checkbox = #{isCheckbox,jdbcType=CHAR},
+		      </if>
+		      <if test="isPage != null" >
+		        is_page = #{isPage,jdbcType=CHAR},
+		      </if>
+		      <if test="isTree != null" >
+		        is_tree = #{isTree,jdbcType=CHAR},
+		      </if>
+		      <if test="createUser != null" >
+		        create_user = #{createUser,jdbcType=BIGINT},
+		      </if>
+		      <if test="createDate != null" >
+		        create_date = #{createDate,jdbcType=TIMESTAMP},
+		      </if>
+		      <if test="updateUser != null" >
+		        update_user = #{updateUser,jdbcType=BIGINT},
+		      </if>
+		      <if test="updateDate != null" >
+		        update_date = #{updateDate,jdbcType=TIMESTAMP},
+		      </if>
+		      <if test="projectPath != null" >
+		        projectPath = #{projectPath,jdbcType=VARCHAR},
+		      </if>
+		      <if test="packageStyle != null" >
+		        packageStyle = #{packageStyle,jdbcType=VARCHAR},
+		      </if>
+		      <if test="sourceBasePackage != null" >
+		        sourceBasePackage = #{sourceBasePackage,jdbcType=VARCHAR},
+		      </if>
+		      <if test="entityPackage != null" >
+		        entityPackage = #{entityPackage,jdbcType=VARCHAR},
+		      </if>
+		      <if test="webBasePackage != null" >
+		        webBasePackage = #{webBasePackage,jdbcType=VARCHAR},
+		      </if>
+		      <if test="flags != null" >
+		        flags = #{flags,jdbcType=VARCHAR},
+		      </if>
+		      <if test="pageModel != null" >
+		        pageModel = #{pageModel,jdbcType=VARCHAR},
+		      </if>
+		      <if test="author != null" >
+		        author = #{author,jdbcType=VARCHAR},
+		      </if>
+		    </set>
+	    where id = #{id,jdbcType=BIGINT}
+  	</update>
+
+	<delete id="delete" parameterType="java.lang.Long">
+		delete from cg_table_config where id = #{value}
+	</delete>
+</mapper>

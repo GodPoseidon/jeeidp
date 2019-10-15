@@ -1,0 +1,13 @@
+# maven ignore
+target/
+release.properties
+*.releaseBackup
+
+# eclipse ignore
+.settings/
+.project
+.classpath
+
+# idea ignore
+.idea/
+*.iml
