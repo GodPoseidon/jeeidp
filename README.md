@@ -13,9 +13,6 @@ jeeidp（Java EE Intelligent development platform）是一款基于代码生成�
 - Web容器测试通过的有Tomcat,Weblogic
 - 要求JDK1.6+
 
-### 技术交流
-- 作者：刘振
-- ![技术交流](http://git.oschina.net/uploads/images/2016/0807/215642_62541a6e_665291.png "jeeidp")
 
 ### 系统演示
 ![登录页面](http://git.oschina.net/uploads/images/2016/0807/211213_855cd0b0_665291.png "jeeidp")
