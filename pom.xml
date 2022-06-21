@@ -31,7 +31,7 @@
 		<aspectj.version>1.7.4</aspectj.version>
 		<cglib.version>3.1</cglib.version>
   	
-	  	<mysql.version>5.1.30</mysql.version>
+	  	<mysql.version>8.0.28</mysql.version>
 	  	<oracle.version>10.2.0.3.0</oracle.version>
 	  	<!-- <sqlserver.version>1.0.0</sqlserver.version> -->
   	
